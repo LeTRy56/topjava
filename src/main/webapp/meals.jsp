@@ -17,6 +17,10 @@
 <hr>
 <h2>Meals</h2>
 
+<a href="meals?action=add">Add meal</a>
+
+<p></p>
+
 <table>
     <style type="text/css">
         TABLE {
@@ -34,13 +38,13 @@
 <%--    <th></th>--%>
 <%--    <th></th>--%>
 </tr>
-    <c:forEach var="meal" items="${requestScope.meals}">
+    <c:forEach var="meal" items="${requestScope.mealsDTOList}">
         <tr style="color: ${meal.excess ? 'red' : 'green'}">
             <td>${f:formatLocalDateTime(meal.dateTime)}</td>
             <td>${meal.description}</td>
             <td>${meal.calories}</td>
-<%--            <td></td>--%>
-<%--            <td></td>--%>
+            <td><a href="meals?action=edit&mealId=${meal.id}">Edit</a> </td>
+            <td><a href="meals?action=delete&mealId=${meal.id}">Delete</a> </td>
         </tr>
     </c:forEach>
 

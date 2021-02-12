@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.javawebinar.topjava.dao.MealDao;
 import ru.javawebinar.topjava.dao.MealDaoImpl;
 import ru.javawebinar.topjava.model.Meal;
@@ -13,11 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.Map;
+
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class MealServlet extends HttpServlet {
     private static final String INSERT_OR_EDIT = "/editMeal.jsp";
     private static final String MEALS_LIST = "/meals.jsp";
     private MealDao mealDao;
+    private static final Logger LOG = getLogger(MealServlet.class);
 
     public MealServlet() {
         this.mealDao = new MealDaoImpl();
@@ -40,13 +47,8 @@ public class MealServlet extends HttpServlet {
         else if (action.equalsIgnoreCase("delete")) {
             Integer mealId = Integer.parseInt(req.getParameter("mealId"));
             mealDao.deleteMeal(mealId);
-            forward = MEALS_LIST;
-            req.setAttribute("mealsDTOList", MealsUtil.filteredByStreams(
-                    mealDao.getAllMeals(),
-                    LocalTime.MIN,
-                    LocalTime.MAX,
-                    MealsUtil.getCaloriesPerDay()
-            ));
+            resp.sendRedirect("/topjava/meals");
+            return;
         } else if (action.equalsIgnoreCase("edit")) {
             forward = INSERT_OR_EDIT;
             Integer mealId = Integer.parseInt(req.getParameter("mealId"));

@@ -58,6 +58,9 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public User getByEmail(String email) {
         log.info("getByEmail {}", email);
-        return getAll().stream().filter(u -> u.getEmail().equals(email)).collect(Collectors.toList()).get(0);
+        return getAll().stream()
+                .filter(u -> u.getEmail().equals(email))
+                .collect(Collectors.toList())
+                .get(0);
     }
 }

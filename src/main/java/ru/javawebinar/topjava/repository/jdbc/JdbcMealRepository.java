@@ -53,6 +53,7 @@ public class JdbcMealRepository implements MealRepository {
             meal.setId(newKey.intValue());
         } else if (namedParameterJdbcTemplate.update(
                 //todo: delete userId from query?
+                //Проверьте, что возвращает JdbcMealRepository при обновлении чужой еды
                 "UPDATE meals SET user_id=:userId, date_time=:dateTime, " +
                         "description=:description, calories=:calories " +
                         "WHERE id=:id", map) == 0) {
